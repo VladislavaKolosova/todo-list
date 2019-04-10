@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" href="https://ez-css.now.sh">
+	
+	<!-- чтобы зачеркивало выполненое todo -->
+	<style>
+		.done {
+			text-decoration: line-through;
+		}
+		
+	</style>
+</head>
+
+<body>
+	<main id="app">
+		<!-- Vladislava todo list -->
+		<h3>{{title}}</h3>
+		<!-- когда форма будет отправлены вызвать функцию addTodo.(.prevent) нужна чтобы предотвратить отправку формы по дефолту-->
+		<!--(newtodo:'') автоматически обновляется  -->
+		<form @submit.prevent="addTodo">
+			<div align = "center">
+			<label for="newTodo">New Todo</label>
+			</div>
+		
+			<!-- моделирую новый туду который связан с (newtodo: "") в app.js. типа что бы ни было в кавычках, оно будет сохраняться в данные-->
+			<input v-model="newTodo" type="text" name="newTodo" id="newTodo" value="" placeholder="Что нужно сделать?">
+			<button type="submit" name="button">Добавить</button>
+		
+		</form>
+		<!-- помечает что все туду сделаны -->
+		<button @click="allDone" type="button" name="button">Все сделано</button>
+		<!--делаю неупорядочен список каждого значения массива todos[]  с пунктами li чтобы показать туду на стр.  -->
+		<ul>
+			<li v-for="todo in todos">
+				<!-- вывожу пункты списка в формате checkbox -->
+				<!--написала v-model потому что если написала бы (checked="todo.done") не зачеркивало бы, потому что это не обновляло бы значение -->
+				<input type="checkbox" v-model="todo.done">
+				<!--если туду выполено обратиться к выполненому классу -->
+				<span :class="{ done: todo.done }">{{todo.title}}</span>
+				<!-- удаление туду -->
+				<button @click="removeTodo(todo)" type="button" name="button">Remove</button>
+			</li>
+		</ul>
+	</main>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="app.js" charset="utf-8"></script>
+</body>
+
+</html>
